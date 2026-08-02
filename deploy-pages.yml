@@ -1,0 +1,43 @@
+name: Deploy PinkChat to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure cloud connection
+        env:
+          PINKCHAT_SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          PINKCHAT_SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+          PINKCHAT_VAPID_PUBLIC_KEY: ${{ vars.VAPID_PUBLIC_KEY }}
+          PINKCHAT_PUSH_FUNCTION_URL: ${{ vars.PUSH_FUNCTION_URL }}
+        run: node scripts/configure.mjs --from-env
+
+      - name: Validate JavaScript
+        run: npm run check
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

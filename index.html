@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+  <meta name="theme-color" content="#ff4fa3" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="PinkChat" />
+  <meta name="description" content="PinkChat — стильный розовый мессенджер" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+  <link rel="icon" href="./icons/icon-192.png" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>PinkChat</title>
+</head>
+<body>
+  <div class="background-orb orb-one"></div>
+  <div class="background-orb orb-two"></div>
+  <main id="app" class="app-shell" aria-live="polite">
+    <section class="sidebar" id="sidebar">
+      <header class="brand-header">
+        <div class="brand-mark">♥</div>
+        <div><h1>PinkChat</h1><p>твой уютный чат</p></div>
+        <button class="icon-button profile-button" id="settingsButton" aria-label="Профиль">⚙</button>
+      </header>
+      <div class="search-wrap"><span>⌕</span><input id="chatSearch" type="search" placeholder="Поиск чатов" autocomplete="off" /></div>
+      <section class="stories-section">
+        <div class="section-title compact"><h2>Истории</h2><button id="addStoryButton" class="text-button">Добавить</button></div>
+        <div class="stories" id="stories"></div>
+      </section>
+      <div class="section-title"><h2>Сообщения</h2><span id="totalUnread">0 новых</span></div>
+      <div id="chatList" class="chat-list"></div>
+      <footer class="sidebar-footer">
+        <button class="notification-card" id="notificationButton"><span class="notification-icon">🔔</span><span><strong>Включить уведомления</strong><small>Не пропускай сообщения</small></span><span class="chevron">›</span></button>
+      </footer>
+    </section>
+
+    <section class="chat-panel" id="chatPanel">
+      <header class="chat-header">
+        <button class="icon-button back-button" id="backButton">‹</button>
+        <div class="chat-person"><div id="activeAvatar" class="active-avatar avatar-alina">А</div><div><h2 id="activeName">PinkChat</h2><p id="activeStatus">выбери чат</p></div></div>
+        <div class="header-actions"><button class="icon-button" id="searchMessagesButton">⌕</button><button class="icon-button" id="chatMenuButton">•••</button></div>
+      </header>
+      <div class="chat-wallpaper"><div id="messages" class="messages" role="log"></div></div>
+      <div id="photoPreview" class="photo-preview hidden"><img id="photoPreviewImage" alt="Выбранная фотография" /><div class="photo-preview-info"><strong>Фото готово</strong><small id="photoPreviewSize"></small></div><button class="icon-button" id="removePhotoButton">×</button></div>
+      <form class="composer" id="messageForm"><button type="button" class="composer-button" id="attachButton">＋</button><input id="photoInput" type="file" accept="image/*" hidden /><div class="message-field-wrap"><textarea id="messageInput" rows="1" maxlength="2000" placeholder="Написать сообщение…"></textarea><button type="button" class="emoji-button" id="emojiButton">☺</button></div><button type="submit" class="send-button" id="sendButton">➤</button></form>
+      <div id="emojiPicker" class="emoji-picker hidden"></div>
+    </section>
+  </main>
+
+  <dialog id="modal" class="modal"><form method="dialog" class="modal-card"><button class="modal-close" value="cancel">×</button><div id="modalContent"></div></form></dialog>
+  <dialog id="storyViewer" class="story-viewer"><form method="dialog" class="story-viewer-card"><button class="story-close" value="cancel">×</button><div class="story-progress"><span></span></div><div id="storyViewerContent"></div></form></dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="./config.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
